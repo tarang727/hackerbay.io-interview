@@ -3,7 +3,7 @@
  */
 
 const jwt = require('jsonwebtoken');
-const _ = require('lodash');
+const { isEmpty } = require('lodash');
 const crypto = require('crypto');
 const expressJWT = require('express-jwt');
 
@@ -19,7 +19,7 @@ class Auth {
     }
 
     static generateToken(payload) {
-        if (_.isEmpty(payload)) {
+        if (isEmpty(payload)) {
             const err = new Error();
             err.name = 'MissingData';
             err.message = 'payload seems to be empty';
@@ -52,3 +52,4 @@ class Auth {
 }
 
 module.exports = Auth._init;
+module.exports._class_ = Auth;
