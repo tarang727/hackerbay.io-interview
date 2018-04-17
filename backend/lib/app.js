@@ -10,6 +10,7 @@ const { randomBytes } = require('crypto');
 const { has } = require('lodash');
 const Log = require('./logger');
 const routes = require('./routes');
+const auth = require('./auth');
 
 class App {
 
@@ -47,6 +48,7 @@ class App {
         app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0 / MySQL 5.3.4' }));
 
         Log.http(app);
+        app.use(auth.installMiddleware(app))
         app.use('/api', routes);
         app.get('/ping', this.ping);
         app.use(this.notFoundError);
