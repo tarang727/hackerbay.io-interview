@@ -38,10 +38,15 @@ class Auth {
 
     constructor() { }
 
-    installMiddleware(app) {
+    installMiddleware() {
         console.log(Auth._secret);
-        app.use(expressJWT({ secret: Auth._secret, requestProperty: 'auth' })
-            .unless({ path: [{ url: '/api/login', method: ['POST'] }, { url: '/api/test', method: ['GET'] }] }));
+        return expressJWT({ secret: Auth._secret, requestProperty: 'auth' })
+            .unless({
+                path: [
+                    { url: '/api/login', method: ['POST'] },
+                    { url: '/api/test', method: ['GET'] }
+                ]
+            });
     }
 
 }
