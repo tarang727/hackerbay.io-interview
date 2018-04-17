@@ -6,8 +6,8 @@ const express = require('express');
 
 class Routes {
 
-    static _init() {
-        const routes = new Routes();
+    static get _init() {
+        const routes = new Routes(express.Router());
         return routes._app;
     }
 
@@ -34,4 +34,4 @@ class Routes {
 
 }
 
-module.exports = Routes._init();
+module.exports = Routes._init;

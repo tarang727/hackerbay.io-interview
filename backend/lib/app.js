@@ -13,8 +13,9 @@ const routes = require('./routes');
 
 class App {
 
-    static _init() {
-        return new App(express());
+    static get _init() {
+        const app = new App(express());
+        return app._app;
     }
     /**
      * @returns an instance of express.Application used in the whole app
@@ -87,4 +88,4 @@ class App {
 
 }
 
-module.exports = App._init()._app;
+module.exports = App._init;
