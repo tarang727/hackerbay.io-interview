@@ -53,7 +53,6 @@ describe('Api JSON Patch Module Test Suite', function() {
                 expect(has(res.body.contactDetails, 'phoneNumbers')).to.be.true;
             })
             .catch((e) => {
-                console.log(e);
                 expect(e).to.be.null;
                 expect(isError(e)).to.be.false;
             });
