@@ -33,7 +33,7 @@ class App {
     }
     /**
      * @return {express.Application}
-     * @access public
+     * @access private
      * @readonly
      * @member {express.Application}
      */
@@ -157,3 +157,4 @@ class App {
 }
 
 module.exports = App._init;
+module.exports._class_ = App;

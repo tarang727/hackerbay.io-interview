@@ -13,7 +13,7 @@ const fetch = require('node-fetch');
 /**
  * Holds all the routes and route handlers for the api
  * @class Routes
- * @protected
+ * @public
  */
 class Routes {
     /**
@@ -136,3 +136,5 @@ class Routes {
 
 /* initialize the Routes class */
 module.exports = Routes._init;
+/* export Routes class */
+module.exports._class_ = Routes;

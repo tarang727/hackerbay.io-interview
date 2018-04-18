@@ -6,7 +6,8 @@
   "scripts": {
     "test": "cross-env NODE_ENV='testing' nyc ./node_modules/mocha/bin/mocha test/index.js --exit",
     "start": "cross-env NODE_ENV='production' nodemon --delay 3500ms index.js",
-    "dev": "cross-env NODE_ENV='development' nodemon --delay 1500ms index.js"
+    "dev": "cross-env NODE_ENV='development' nodemon --delay 1500ms index.js",
+    "lint": "eslint --fix"
   },
   "keywords": [
     "Authentication",
@@ -98,7 +99,9 @@
       "logs/**/*",
       "*.json",
       ".eslintrc",
-      ".gitignore"
+      ".gitignore",
+      "index.js",
+      "lib/logger.js"
     ],
     "report-dir": "./coverage_output"
   }
