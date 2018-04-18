@@ -5,7 +5,7 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const {has, isError} = require('lodash');
+const {has, isError, isBuffer} = require('lodash');
 const fileType = require('file-type');
 const app = require('../lib/app');
 const login = require('../lib/model/login');
@@ -16,13 +16,19 @@ chai.use(chaiHttp);
 describe('Api Thumbnail Module Test Suite', function() {
     const payload = login('user', 'password');
 
-    it.skip('Should have an API that provides a buffer image', () => {
+    it('Should have an API that provides a buffer image', function() {
+        this.timeout('25000ms');
+
         return chai.request(app)
             .post('/api/thumbnail')
+            .set('Accept', 'application/octet-stream')
             .set('Authorization', 'Bearer ' + payload)
             .set('Content-Type', 'application/json')
             .then((res) => {
-                console.log(res);
+                expect(res).to.have.status(200);
+                expect(res.type).to.eql('image/jpeg');
+                expect(isBuffer(res.body)).to.be.true;
+                expect(fileType(res.body).mime).to.eql('image/jpeg');
             })
             .catch((e) => {
                 expect(e).to.be.null;
@@ -30,16 +36,21 @@ describe('Api Thumbnail Module Test Suite', function() {
             });
     });
 
-    it.skip('API should work when image_url on request body is provided', () => {
+    it('API should work when image_url on request body is provided', function() {
+        this.timeout('25000ms');
+
         return chai.request(app)
             .post('/api/thumbnail')
             .set('Authorization', 'Bearer ' + payload)
             .set('Content-Type', 'application/json')
             .send({
-                image_url: '',
+                image_url: 'https://www.telegraph.co.uk/content/dam/technology/2017/11/01/emoji_update_2017_12_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.png?imwidth=1400',
             })
             .then((res) => {
-                console.log(res);
+                expect(res).to.have.status(200);
+                expect(res.type).to.eql('image/png');
+                expect(isBuffer(res.body)).to.be.true;
+                expect(fileType(res.body).mime).to.eql('image/png');
             })
             .catch((e) => {
                 expect(e).to.be.null;

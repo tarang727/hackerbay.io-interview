@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">71.74% </span>
+        <span class="strong">85.42% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>33/46</span>
+        <span class='fraction'>41/48</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">58.33% </span>
+        <span class="strong">91.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>7/12</span>
+        <span class='fraction'>11/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">75% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>6/8</span>
+        <span class='fraction'>8/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">72.73% </span>
+        <span class="strong">84.78% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>32/44</span>
+        <span class='fraction'>39/46</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -186,11 +186,15 @@
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
 <a name='L140'></a><a href='#L140'>140</a>
-<a name='L141'></a><a href='#L141'>141</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -308,14 +312,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -337,6 +343,7 @@ const jsonPatch = require('./model/json-patch');
 const loginUser = require('./model/login');
 const sharp = require('sharp');
 const fetch = require('node-fetch');
+const fileType = require('file-type');
 &nbsp;
 /**
  * Holds all the routes and route handlers for the api
@@ -447,15 +454,17 @@ class Routes {
      * @member {Function}
      * @async
      */
-<span class="fstat-no" title="function not covered" >    as</span>ync thumbnailCreator(req, res, next) {
-<span class="cstat-no" title="statement not covered" >        try {</span>
-            const imageUrl = <span class="cstat-no" title="statement not covered" >has(req.body, 'image_url') &amp;&amp; !isEmpty(req.body.image_url)</span>
+    async thumbnailCreator(req, res, next) {
+        try {
+            const imageUrl = has(req.body, 'image_url') &amp;&amp; !isEmpty(req.body.image_url)
                 ? req.body.image_url
-                : 'https://www.hdwallpapers.in/walls/life_under_the_ocean-wide.jpg';
+                : 'https://cdn.macrumors.com/article-new/2017/11/crying-tears-of-joy-emoji-250x248.jpg';
 &nbsp;
-            const imageBuffer = <span class="cstat-no" title="statement not covered" >await fetch(imageUrl, {method: 'GET', compress: true}).then(<span class="fstat-no" title="function not covered" >(r</span>es) =&gt; <span class="cstat-no" title="statement not covered" >res.buffer())</span>;</span>
-            const imageThumbnail = <span class="cstat-no" title="statement not covered" >await sharp(imageBuffer).resize(50, 50).toBuffer();</span>
-<span class="cstat-no" title="statement not covered" >            return res.send(imageThumbnail);</span>
+            const imageBuffer = await fetch(imageUrl, {method: 'GET', compress: true}).then((res) =&gt; res.buffer());
+            const imageThumbnail = await sharp(imageBuffer).resize(50, 50).toBuffer();
+&nbsp;
+            res.writeHead(200, {'Content-Type': fileType(imageThumbnail).mime});
+            return res.end(imageThumbnail, 'binary');
         } catch (e) {
 <span class="cstat-no" title="statement not covered" >            return next(e);</span>
         }
@@ -472,7 +481,7 @@ module.exports._class_ = Routes;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 18 2018 12:44:40 GMT+0300 (EAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 18 2018 13:12:03 GMT+0300 (EAT)
 </div>
 </div>
 <script src="../prettify.js"></script>

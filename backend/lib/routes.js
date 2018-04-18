@@ -9,6 +9,7 @@ const jsonPatch = require('./model/json-patch');
 const loginUser = require('./model/login');
 const sharp = require('sharp');
 const fetch = require('node-fetch');
+const fileType = require('file-type');
 
 /**
  * Holds all the routes and route handlers for the api
@@ -123,11 +124,13 @@ class Routes {
         try {
             const imageUrl = has(req.body, 'image_url') && !isEmpty(req.body.image_url)
                 ? req.body.image_url
-                : 'https://www.hdwallpapers.in/walls/life_under_the_ocean-wide.jpg';
+                : 'https://cdn.macrumors.com/article-new/2017/11/crying-tears-of-joy-emoji-250x248.jpg';
 
             const imageBuffer = await fetch(imageUrl, {method: 'GET', compress: true}).then((res) => res.buffer());
             const imageThumbnail = await sharp(imageBuffer).resize(50, 50).toBuffer();
-            return res.send(imageThumbnail);
+
+            res.writeHead(200, {'Content-Type': fileType(imageThumbnail).mime});
+            return res.end(imageThumbnail, 'binary');
         } catch (e) {
             return next(e);
         }
