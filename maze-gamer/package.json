@@ -8,12 +8,17 @@
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-scripts-ts": "2.15.1",
+    "reactstrap": "^5.0.0-beta.3",
     "redux": "^4.0.0",
     "uuid": "^3.2.1"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
+    "build-css": "node-sass-chokidar src/scss/style.scss src/index.css --error-bell",
+    "watch-css": "npm run build-css && node-sass-chokidar src/scss/style.scss src/index.css --error-bell --watch --recursively",
+    "start-js": "react-scripts-ts start",
+    "start": "npm-run-all -p watch-css start-js",
+    "build-js": "react-scripts-ts build",
+    "build": "npm-run-all build-css build-js",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject"
   },
@@ -25,7 +30,10 @@
     "@types/react": "^16.3.11",
     "@types/react-dom": "^16.0.5",
     "@types/react-redux": "^5.0.16",
+    "@types/reactstrap": "^5.0.21",
     "enzyme": "^3.3.0",
+    "node-sass-chokidar": "^1.2.2",
+    "npm-run-all": "^4.1.2",
     "react-addons-test-utils": "^15.6.2",
     "typescript": "^2.8.1"
   }

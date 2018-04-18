@@ -1,0 +1,11 @@
+// Here you can add other styles
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,400,700");
+
+.fix-dropmenu.dropdown-menu-right{
+    position: absolute !important;
+    top: 100% !important;
+    right: 0 !important;
+    left: auto !important;
+    transform: none !important;
+}
