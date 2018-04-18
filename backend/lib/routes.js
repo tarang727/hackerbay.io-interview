@@ -8,6 +8,7 @@ const jsonPatch = require('./model/json-patch');
 const loginUser = require('./model/login');
 const sharp = require('sharp');
 const fetch = require('node-fetch');
+const fileType = require('file-type');
 
 class Routes {
 
@@ -74,8 +75,8 @@ class Routes {
                 ? req.body.image_url
                 : 'https://www.hdwallpapers.in/walls/life_under_the_ocean-wide.jpg';
     
-            const res_image = await fetch(image_url, { method: 'GET', compress: true });
-            const image_thumbnail = await sharp(res_image.buffer()).resize(50, 50).toBuffer();
+            const image_buffer = await fetch(image_url, { method: 'GET', compress: true }).then(res => res.buffer());
+            const image_thumbnail = await sharp(image_buffer).resize(50, 50).toBuffer();
             return res.send(image_thumbnail);
         } catch (e) {
             return next(e);

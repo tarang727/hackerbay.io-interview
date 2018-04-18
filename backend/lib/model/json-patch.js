@@ -3,7 +3,7 @@
  */
 
 const { validate, applyReducer } = require('fast-json-patch');
-const { isEmpty, isObject, isArray } = require('lodash');
+const { isEmpty, isObject, isArray, isNil } = require('lodash');
 
 /**
  * Patchs a list of operations to a json object doc
@@ -39,7 +39,7 @@ module.exports = (doc, patch) => {
     }
 
     const isValid = validateJsonPatch(doc, patch);
-    if (isValid.length != 0) {
+    if (!isNil(isValid)) {
         const err = new Error();
         err.name = 'JsonPatchValidationError';
         err.message = 'Error occured while trying to validate your JSON patch operations and the original json object';

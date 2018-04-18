@@ -4,14 +4,12 @@
 
 const jwt = require('jsonwebtoken');
 const { isEmpty } = require('lodash');
-const crypto = require('crypto');
+const {randomBytes} = require('crypto');
 const expressJWT = require('express-jwt');
 
-class Auth {
+const _secret =  randomBytes(24).toString('hex');
 
-    static get _secret() {
-        return crypto.randomBytes(24).toString('hex');
-    }
+class Auth {
 
     static get _init() {
         const auth = new Auth();
@@ -27,8 +25,7 @@ class Auth {
             err.status = 400;
             throw err;
         }
-        console.log(Auth._secret);        
-        return jwt.sign(payload, (Auth._secret),
+        return jwt.sign(payload, _secret,
             {
                 expiresIn: '1d',
                 audience: 'hackerbay.io:api',
@@ -39,8 +36,7 @@ class Auth {
     constructor() { }
 
     installMiddleware() {
-        console.log(Auth._secret);
-        return expressJWT({ secret: Auth._secret, requestProperty: 'auth' })
+        return expressJWT({ secret: _secret, requestProperty: 'auth' })
             .unless({
                 path: [
                     { url: '/api/login', method: ['POST'] },
