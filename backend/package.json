@@ -39,7 +39,7 @@
     "sharp": "^0.20.1"
   },
   "repository": {
-    "url": "https://github.com/trendy-weshy/hackerbay.io-backend.git"
+    "url": "https://github.com/trendy-weshy/hackerbay.io-interview.git"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.8",
