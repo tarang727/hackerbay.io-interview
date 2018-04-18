@@ -1,5 +1,6 @@
 /**
  * created on 17.04.2018
+ * @author John Waweru
  */
 
 const express = require('express');
@@ -133,6 +134,7 @@ class App {
      * @access private
      * @member {Function}
      * @instance
+     * @async
      */
     async ping(req, res, next) {
         try {

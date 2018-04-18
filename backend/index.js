@@ -1,5 +1,8 @@
+/* eslint-disable */
+
 /**
- * created on 17.04.2018
+ * created on 17.04.
+ * @author John Waweru
  */
 
 const http = require('http');
@@ -21,7 +24,8 @@ server.on('listening', onListening);
 
 /**
  * provide the appropriate data type of the port which is number
- * @param {*} val port number
+ * @param {*} val
+ * @return {*}
  */
 function normalizePort(val) {
     const port = (typeof val === 'string') ? parseInt(val, 10) : val;

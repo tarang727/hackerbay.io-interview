@@ -1,5 +1,6 @@
 /**
  * created on 18.04.2018
+ * @author John Waweru
  */
 
 const {validate, applyReducer} = require('fast-json-patch');

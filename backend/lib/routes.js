@@ -1,5 +1,6 @@
 /**
  * created on 17.04.2018
+ * @author John Waweru
  */
 
 const express = require('express');
@@ -112,9 +113,10 @@ class Routes {
      * @param {express.Request} req
      * @param {express.Response} res
      * @param {express.NextFunction} next
+     * @return {*} express buffer stream response
      * @access private
      * @member {Function}
-     * @return {*} express buffer stream response
+     * @async
      */
     async thumbnailCreator(req, res, next) {
         try {

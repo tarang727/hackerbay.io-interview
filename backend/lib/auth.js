@@ -1,5 +1,6 @@
 /**
  * created on 17.04.2018
+ * @author John Waweru
  */
 
 require('dotenv').config();
@@ -12,6 +13,7 @@ const expressJWT = require('express-jwt');
 /**
  * JWT Secret
  * @access private
+ * @type {string}
  * @readonly
  */
 const _secret = process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : randomBytes(24).toString('hex');
@@ -38,7 +40,7 @@ class Auth {
      * generates a JWT token
      * @access public
      * @static
-     * @param {*} payload
+     * @param {OBject} payload
      * @return {string} json web token string
      */
     static generateToken(payload) {
@@ -57,6 +59,12 @@ class Auth {
                 issuer: 'hackerbay.io:backend',
             });
     }
+
+    /**
+     * @access private
+     * @constructor
+     */
+    constructor() { }
 
     /**
      * used to inject express-jwt middleware to an express application

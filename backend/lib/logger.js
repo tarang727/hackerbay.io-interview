@@ -1,5 +1,6 @@
 /**
  * created on 17.04.2018
+ * @author John Waweru
  */
 
 const logger = require('morgan');
