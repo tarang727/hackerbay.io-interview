@@ -3,14 +3,13 @@
  */
 
 import { combineReducers, createStore } from 'redux';
-import { DataState, sampleReducer } from './reducers/sampler';
+import { GameState, gameReducer } from './reducers';
 
-export interface IAppState {
-  data: DataState;
+export interface AppState {
+  game: GameState;
 }
-
-export const store = createStore<IAppState, any, any, any>(
+export const store = createStore<AppState, any, any, any>(
   combineReducers({
-    data: sampleReducer
+    game: gameReducer
   })
 );
