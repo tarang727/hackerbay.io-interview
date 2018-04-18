@@ -34,6 +34,7 @@ class App {
      * @return {express.Application}
      * @access public
      * @readonly
+     * @member {express.Application}
      */
     get _app() {
         return this.app;
@@ -94,6 +95,7 @@ class App {
      * @param {express.NextFunction} next
      * @return {*}
      * @access private
+     * @member {Function}
      * @instance
      */
     notFoundError(req, res, next) {
@@ -113,6 +115,7 @@ class App {
      * @param {express.NextFunction} next
      * @return {*}
      * @access private
+     * @member {Function}
      * @instance
      */
     restErrorHandler(err, req, res) {
@@ -128,6 +131,7 @@ class App {
      * @param {express.NextFunction} next
      * @return {*}
      * @access private
+     * @member {Function}
      * @instance
      */
     async ping(req, res, next) {

@@ -60,6 +60,7 @@ class Auth {
 
     /**
      * used to inject express-jwt middleware to an express application
+     * @member {Function}
      * @access public
      * @instance
      * @return {jwt.RequestHandler}

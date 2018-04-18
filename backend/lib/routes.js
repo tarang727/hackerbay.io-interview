@@ -29,6 +29,7 @@ class Routes {
 
     /**
      * express.Router class instance used in the class
+     * @member {express.Router}
      * @readonly
      * @access public
      */
@@ -54,6 +55,7 @@ class Routes {
      * @param {express.Response} res
      * @param {express.NextFunction} next
      * @access private
+     * @member {Function}
      * @return {*} express json response
      */
     login(req, res, next) {
@@ -84,6 +86,7 @@ class Routes {
      * @param {express.Response} res
      * @param {express.NextFunction} next
      * @access private
+     * @member {Function}
      * @return {*} express json response
      */
     jsonPatch(req, res, next) {
@@ -110,6 +113,7 @@ class Routes {
      * @param {express.Response} res
      * @param {express.NextFunction} next
      * @access private
+     * @member {Function}
      * @return {*} express buffer stream response
      */
     async thumbnailCreator(req, res, next) {
