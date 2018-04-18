@@ -63,6 +63,7 @@ class Auth {
     /**
      * @access private
      * @constructor
+     * @hideconstructor
      */
     constructor() { }
 

@@ -41,6 +41,7 @@ class Routes {
     /**
      * @constructor
      * @param {express.Application} app
+     * @private
      */
     constructor(app) {
         this.app=app;

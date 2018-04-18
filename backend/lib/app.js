@@ -44,6 +44,7 @@ class App {
     /**
      * creates express app
      * @constructor
+     * @private
      * @param {express.Application} app - an instance of express.Application
      */
     constructor(app) {
