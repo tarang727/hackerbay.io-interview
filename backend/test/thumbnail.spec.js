@@ -4,5 +4,5 @@
  */
 
 describe('Api Thumbnail Module Test Suite', function() {
-    //
+
 });

@@ -20,31 +20,31 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">47.83% </span>
+        <span class="strong">71.74% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>22/46</span>
+        <span class='fraction'>33/46</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">25% </span>
+        <span class="strong">58.33% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>3/12</span>
+        <span class='fraction'>7/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>5/8</span>
+        <span class='fraction'>6/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">47.73% </span>
+        <span class="strong">72.73% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>21/44</span>
+        <span class='fraction'>32/44</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -280,20 +280,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -419,21 +419,21 @@ class Routes {
      * @member {Function}
      * @return {*} express json response
      */
-<span class="fstat-no" title="function not covered" >    js</span>onPatch(req, res, next) {
-<span class="cstat-no" title="statement not covered" >        try {</span>
-<span class="cstat-no" title="statement not covered" >            if (!has(req.body, 'original_json') || !has(req.body, 'json_patch')) {</span>
-                const err = <span class="cstat-no" title="statement not covered" >new Error();</span>
-<span class="cstat-no" title="statement not covered" >                err.name = 'MissingData';</span>
-<span class="cstat-no" title="statement not covered" >                err.message = 'Please provide original_json field and json_patch field in the request body.';</span>
-<span class="cstat-no" title="statement not covered" >                err.level = 'error';</span>
-<span class="cstat-no" title="statement not covered" >                err.status = 400;</span>
-<span class="cstat-no" title="statement not covered" >                throw err;</span>
+    jsonPatch(req, res, next) {
+        try {
+            if (!has(req.body, 'original_json') || !has(req.body, 'json_patch')) {
+                const err = new Error();
+                err.name = 'MissingData';
+                err.message = 'Please provide original_json field and json_patch field in the request body.';
+                err.level = 'error';
+                err.status = 400;
+                throw err;
             }
 &nbsp;
-            const doc = <span class="cstat-no" title="statement not covered" >jsonPatch(req.body.original_json, req.body.json_patch);</span>
-<span class="cstat-no" title="statement not covered" >            return res.json(doc);</span>
+            const doc = jsonPatch(req.body.original_json, req.body.json_patch);
+            return res.json(doc);
         } catch (e) {
-<span class="cstat-no" title="statement not covered" >            return next(e);</span>
+            return next(e);
         }
     }
 &nbsp;
@@ -472,7 +472,7 @@ module.exports._class_ = Routes;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 18 2018 12:00:24 GMT+0300 (EAT)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Apr 18 2018 12:34:59 GMT+0300 (EAT)
 </div>
 </div>
 <script src="../prettify.js"></script>
