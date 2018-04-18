@@ -19,15 +19,15 @@ export class Board extends React.Component {
             <div className="container-fluid">
                 <div className="row justify-content-md-center">
                     <div className="col-md-6">
-                        <h1 className="text-center">Mario Maze Game</h1>
+                        <h1 className="text-center">Mario Maze</h1>
                     </div>
                     <div className="w-100" />
-                    <div className="col-md-4 align-self-center">
+                    <div className="col-md-2 align-self-center">
                         <Button className="btn btn-info text-white" onClick={() => console.log('clicked!')}>Start Game</Button>
                     </div>
 
                     <div className="col-md-12">
-                        <div className="row align-items-center justify-content-center">
+                        <div className="row align-items-center justify-content-space-around">
                             <div className="col">
                                 <Cell />
                             </div>
