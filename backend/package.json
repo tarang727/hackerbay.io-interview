@@ -1,10 +1,11 @@
 {
-  "name": "hackerbay.io/backend",
+  "name": "hackerbay.io-backend",
   "version": "1.0.0",
   "description": "a simple stateless microservice in Nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --delay 3500ms index.js"
   },
   "keywords": [
     "Authentication",
@@ -60,5 +61,26 @@
     "file-type": "^7.6.0",
     "jsdoc": "^3.5.5",
     "mocha": "^5.1.0"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      "node_modules/**/node_modules",
+      "logs",
+      "test"
+    ],
+    "verbose": true,
+    "execMap": {
+      "js": "node --harmony --inspect"
+    },
+    "watch": [ "lib/" ],
+    "env": {
+      "PORT": 8080,
+      "API_NAME": "Hackerbay.io/Backend"
+    },
+    "ext": "js,json",
+    "runOnChangeOnly": false,
+    "stdin": true
   }
 }

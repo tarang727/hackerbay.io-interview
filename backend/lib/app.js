@@ -11,6 +11,7 @@ const { has } = require('lodash');
 const Log = require('./logger');
 const routes = require('./routes');
 const auth = require('./auth');
+const bodyParser = require('body-parser');
 
 class App {
 
@@ -31,7 +32,7 @@ class App {
      */
     constructor(app) {
         this.app=app; 
-
+        /// app third party middlewares //
         app.use(compression({
             level: 9,
             memLevel: 9,
@@ -46,9 +47,25 @@ class App {
             noSniff: true
         }));
         app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0 / MySQL 5.3.4' }));
-
         Log.http(app);
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({
+            extended: false,
+            limit: '100MB'
+        }));
         app.use(auth.installMiddleware(app))
+        // End of Installation of third party API //
+
+        app.use((req, res, next) => {
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Credentials', 'true');
+            res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS,HEAD');
+            res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Content-Type, Accept,X-Requested-With, Authorization, Access-Control-Request-Method, Access-Control-Request-Headers');
+            if (req.method === 'OPTIONS') {
+                return res.sendStatus(200);
+            }
+            return next();
+        });
         app.use('/api', routes);
         app.get('/ping', this.ping);
         app.use(this.notFoundError);
