@@ -4,7 +4,7 @@
   "description": "a simple stateless microservice in Nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV='testing' nyc ./node_modules/mocha/bin/mocha test/index.js --exit",
+    "test": "cross-env NODE_ENV='testing' nyc ./node_modules/mocha/bin/mocha test/index.js --exit --harmony --slow",
     "start": "cross-env NODE_ENV='production' nodemon --delay 3500ms index.js",
     "dev": "cross-env NODE_ENV='development' nodemon --delay 1500ms index.js",
     "lint": "eslint --fix"
@@ -102,6 +102,6 @@
       "index.js",
       "lib/logger.js"
     ],
-    "report-dir": "./coverage_output"
+    "report-dir": "./reports/coverage"
   }
 }

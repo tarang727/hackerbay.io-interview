@@ -19,7 +19,7 @@ const expressJWT = require('express-jwt');
 const _secret = process.env.NODE_ENV === 'production' ? process.env.JWT_SECRET : randomBytes(24).toString('hex');
 
 /**
- * Handles all jwt authentication functionalities
+ * Handles all API jwt authentication functionality
  * @class Auth
  * @access public
  */

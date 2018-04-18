@@ -32,22 +32,22 @@ class Logger {
             return dir;
         })(path.join(__dirname, '../logs'));
 
-        const accessLogStream = rfs('access.log', {interval: '3d', path: logDir}); // ACCESS LOGS STREAM //
-        const errorLogStream = rfs('error.log', {interval: '3d', path: logDir}); // ERROR LOGS STREAM //
+        const accessLogStream = rfs('access.log', {interval: '3d', path: logDir}); /* ACCESS LOGS STREAM */
+        const errorLogStream = rfs('error.log', {interval: '3d', path: logDir}); /* ERROR LOGS STREAM */
 
-        // log all Error and Warnings to error.log //
+        /* log all Error and Warnings to error.log */
         app.use(logger('combined', {
             skip: (req, res) => (res.statusCode < 400),
             stream: errorLogStream,
         }));
 
-        // log all requests to access.log //
+        /* log all requests to access.log */
         app.use(logger('combined', {
             stream: accessLogStream,
             immediate: true,
         }));
 
-        app.use(logger('dev')); // log any other response to console //
+        app.use(logger('dev')); /* log any other response to console */
     }
 }
 
