@@ -4,10 +4,11 @@ import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { Board } from './components/Board';
 
 ReactDOM.render(
   <Provider store={store}>
-    <h1>React Works</h1>
+    <Board />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

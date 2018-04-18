@@ -1,5 +1,26 @@
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
   font-family: sans-serif;
+  overflow-x: hidden;
+  display: block;
+}
+.board-window{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: #ccc;
+  display: block;
+  overflow-x: hidden;
+}
+.board {
+  width: 100%;
+  min-height: 50%;
+  height: auto;
+  display: block;
+  background: #fff;
+  margin: 20px;
+  overflow-x: hidden;
 }
