@@ -29,7 +29,7 @@ class App {
      */
     static get _init() {
         const app = new App(express());
-        return app._app;
+        return app;
     }
     /**
      * @return {express.Application}
@@ -121,7 +121,6 @@ class App {
      * @instance
      */
     restErrorHandler(err, req, res) {
-        console.log(err); /* for debugging purposes */
         return res.status(has(err, 'status') ? err.status : 500)
             .json(err || {message: 'Something Went Wrong!', name: 'InteralServerError', level: 'error', status: 500});
     }
@@ -156,5 +155,5 @@ class App {
     }
 }
 
-module.exports = App._init;
+module.exports = App._init._app;
 module.exports._class_ = App;

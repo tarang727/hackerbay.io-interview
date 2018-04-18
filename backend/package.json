@@ -4,7 +4,7 @@
   "description": "a simple stateless microservice in Nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV='testing' nyc ./node_modules/mocha/bin/mocha test/index.js --exit --harmony --slow",
+    "test": "cross-env NODE_ENV='testing' ./node_modules/.bin/nyc --reporter=html mocha test/index.js --reporter=list --exit --harmony",
     "start": "cross-env NODE_ENV='production' nodemon --delay 3500ms index.js",
     "dev": "cross-env NODE_ENV='development' nodemon --delay 1500ms index.js",
     "lint": "eslint --fix"
@@ -64,7 +64,8 @@
     "eslint-plugin-chai-expect": "^1.1.1",
     "eslint-plugin-mocha": "^5.0.0",
     "file-type": "^7.6.0",
-    "mocha": "^5.1.0"
+    "mocha": "^5.1.0",
+    "nyc": "^11.6.0"
   },
   "nodemonConfig": {
     "restartable": "rs",

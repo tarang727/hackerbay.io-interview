@@ -35,7 +35,6 @@ class Auth {
         const auth = new Auth();
         return auth;
     }
-
     /**
      * generates a JWT token
      * @access public
@@ -80,6 +79,7 @@ class Auth {
                 path: [
                     {url: '/api/login', method: ['POST']},
                     {url: '/api/test', method: ['GET']},
+                    {url: '/ping', method: ['GET']},
                 ],
             });
     }
@@ -90,3 +90,6 @@ module.exports = Auth._init;
 
 /* export the Auth class for use of static methods */
 module.exports._class_ = Auth;
+
+/* export secret */
+module.exports.__secret = _secret;
