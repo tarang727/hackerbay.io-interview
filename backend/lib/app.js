@@ -6,55 +6,70 @@ const express = require('express');
 const helmet = require('helmet');
 const compression = require('compression');
 const zlib = require('zlib');
-const { randomBytes } = require('crypto');
-const { has } = require('lodash');
+const {randomBytes} = require('crypto');
+const {has} = require('lodash');
 const Log = require('./logger');
 const routes = require('./routes');
 const auth = require('./auth');
 const bodyParser = require('body-parser');
 
+/**
+ * main application class used to bootstrap an express Application
+ * @class App
+ * @access protected
+ */
 class App {
-
+    /**
+     * creates an instance of App and returns the express application used in the App class
+     * @access public
+     * @static
+     * @return {express.Application}
+     * @readonly
+     */
     static get _init() {
         const app = new App(express());
         return app._app;
     }
     /**
-     * @returns an instance of express.Application used in the whole app
+     * @return {express.Application}
+     * @access public
+     * @readonly
      */
     get _app() {
-        return this.app
+        return this.app;
     }
+
     /**
      * creates express app
      * @constructor
      * @param {express.Application} app - an instance of express.Application
      */
     constructor(app) {
-        this.app=app; 
-        /// app third party middlewares //
+        this.app=app;
+
+        /* app third party middlewares */
         app.use(compression({
             level: 9,
             memLevel: 9,
-            strategy: zlib.Z_HUFFMAN_ONLY
+            strategy: zlib.Z_HUFFMAN_ONLY,
         }));
         app.use(helmet({
             frameguard: {
-                action: 'deny'
+                action: 'deny',
             },
             dnsPrefetchControl: false,
             noCache: true,
-            noSniff: true
+            noSniff: true,
         }));
-        app.use(helmet.hidePoweredBy({ setTo: 'PHP 4.2.0 / MySQL 5.3.4' }));
+        app.use(helmet.hidePoweredBy({setTo: 'PHP 4.2.0 / MySQL 5.3.4'}));
         Log.http(app);
         app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({
             extended: false,
-            limit: '100MB'
+            limit: '100MB',
         }));
-        app.use(auth.installMiddleware(app))
-        // End of Installation of third party API //
+        app.use(auth.installMiddleware(app));
+        /* End of Installation of third party API */
 
         app.use((req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*');
@@ -71,6 +86,16 @@ class App {
         app.use(this.notFoundError);
         app.use(this.restErrorHandler);
     }
+
+    /**
+     * API 404 Error handler
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {express.NextFunction} next
+     * @return {*}
+     * @access private
+     * @instance
+     */
     notFoundError(req, res, next) {
         const err = new Error();
         err.message = 'Requested Resource is not found';
@@ -79,13 +104,31 @@ class App {
         err.level = 'warning';
         return next(err);
     }
-    restErrorHandler(err, req, res) {
-        console.log(err); // for debugging purposes //
-        return res.status(has(err, 'status') ? err.status : 500)
-            .json(err || { message: 'Something Went Wrong!', name: 'InteralServerError', level: 'error', status: 500 });
-    }
+
     /**
-     * @returns A promisified payload object to signify the API is online and working 
+     * API Error handler
+     * @param {Error} err
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {express.NextFunction} next
+     * @return {*}
+     * @access private
+     * @instance
+     */
+    restErrorHandler(err, req, res) {
+        console.log(err); /* for debugging purposes */
+        return res.status(has(err, 'status') ? err.status : 500)
+            .json(err || {message: 'Something Went Wrong!', name: 'InteralServerError', level: 'error', status: 500});
+    }
+
+    /**
+     * API ping route handler
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {express.NextFunction} next
+     * @return {*}
+     * @access private
+     * @instance
      */
     async ping(req, res, next) {
         try {
@@ -94,7 +137,7 @@ class App {
                     setTimeout(
                         () => resolve({
                             payload: randomBytes(12).toString('base64'),
-                            timestamp: new Date().toISOString()
+                            timestamp: new Date().toISOString(),
                         }),
                     750);
                 });
@@ -104,7 +147,6 @@ class App {
             return next(e);
         }
     }
-
 }
 
 module.exports = App._init;

@@ -4,8 +4,9 @@
   "description": "a simple stateless microservice in Nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --delay 3500ms index.js"
+    "test": "cross-env NODE_ENV='testing' nyc ./node_modules/mocha/bin/mocha test/index.js --exit",
+    "start": "cross-env NODE_ENV='production' nodemon --delay 3500ms index.js",
+    "dev": "cross-env NODE_ENV='development' nodemon --delay 1500ms index.js"
   },
   "keywords": [
     "Authentication",
@@ -58,6 +59,9 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "eslint": "^4.19.1",
+    "eslint-config-google": "^0.9.1",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-mocha": "^5.0.0",
     "file-type": "^7.6.0",
     "jsdoc": "^3.5.5",
     "mocha": "^5.1.0"
@@ -74,13 +78,28 @@
     "execMap": {
       "js": "node --harmony --inspect"
     },
-    "watch": [ "lib/" ],
+    "watch": [
+      "lib/"
+    ],
     "env": {
       "PORT": 8080,
-      "API_NAME": "Hackerbay.io/Backend"
+      "API_NAME": "Hackerbay.io/Backend",
+      "JWT_SECRET": "1915a751c7c37ab31ac2babfaf8e8f6292ce38ae"
     },
     "ext": "js,json",
     "runOnChangeOnly": false,
     "stdin": true
+  },
+  "nyc": {
+    "check-coverage": true,
+    "exclude": [
+      "node_modules/**/*",
+      "test/**/*",
+      "logs/**/*",
+      "*.json",
+      ".eslintrc",
+      ".gitignore"
+    ],
+    "report-dir": "./coverage_output"
   }
 }

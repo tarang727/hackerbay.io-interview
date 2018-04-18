@@ -2,25 +2,27 @@
  * created on 18.04.2018
  */
 
-const { validate, applyReducer } = require('fast-json-patch');
-const { isEmpty, isObject, isArray, isNil } = require('lodash');
+const {validate, applyReducer} = require('fast-json-patch');
+const {isEmpty, isObject, isArray, isNil} = require('lodash');
 
 /**
  * Patchs a list of operations to a json object doc
  * @param {Object} doc the original json object to be applied the json patch operation
  * @param {Array} patch a list of json patch operation to be applied to the doc
- * @returns a new json document with the new changes
+ * @return {PatchError} a new json document with the new changes
  */
 const validateJsonPatch = (doc, patch) => validate(patch, doc);
 
 /**
  * Patchs a list of operations to a json object doc
+ * @function jsonPatch
  * @param {Object} doc the original json object to be applied the json patch operation
  * @param {Array} patch a list of json patch operation to be applied to the doc
- * @returns a new json document with the new changes
- * @throws validation errors by the json patch library #see: https://www.npmjs.com/package/fast-json-patch
+ * @return {*} a new json document with the new changes
+ * @throws validation errors by the json patch library
+ * @see: https://www.npmjs.com/package/fast-json-patch
  */
-module.exports = (doc, patch) => {
+const jsonPatch = (doc, patch) => {
     if (isEmpty(doc) || !isObject(doc)) {
         const err = new Error();
         err.name = 'NullData';
@@ -51,3 +53,5 @@ module.exports = (doc, patch) => {
 
     return patch.reduce(applyReducer, doc);
 };
+
+module.exports = jsonPatch;

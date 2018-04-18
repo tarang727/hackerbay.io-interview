@@ -1,17 +1,19 @@
 /**
- * created on 17.04.2018
+ * created on 18.04.2018
  */
 
-const { isEmpty, isString } = require('lodash');
+const {isEmpty, isString} = require('lodash');
 const auth = require('../auth');
-const { randomBytes } = require('crypto');
+const {randomBytes} = require('crypto');
 
 /**
  * generates a json web token on presence of a password and username
- * @param {string} username 
- * @param {string} password 
+ * @function loginUser
+ * @param {string} username
+ * @param {string} password
+ * @return {string}
  */
-module.exports = (username, password) => {
+const loginUser = (username, password) => {
     if (isEmpty(username) || !isString(username)) {
         const err = new Error();
         err.name = 'NullData';
@@ -28,7 +30,9 @@ module.exports = (username, password) => {
         err.status = 405;
         throw err;
     }
-    
+
     // generate jwt token
-    return auth._class_.generateToken({  username, password, payload: randomBytes(20).toString('base64') });
-}
+    return auth._class_.generateToken({username, payload: randomBytes(20).toString('base64')});
+};
+
+module.exports = loginUser;
