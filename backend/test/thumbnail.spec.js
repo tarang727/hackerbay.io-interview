@@ -44,7 +44,7 @@ describe('Api Thumbnail Module Test Suite', function() {
             .set('Authorization', 'Bearer ' + payload)
             .set('Content-Type', 'application/json')
             .send({
-                image_url: 'https://www.telegraph.co.uk/content/dam/technology/2017/11/01/emoji_update_2017_12_trans_NvBQzQNjv4BqqVzuuqpFlyLIwiB6NTmJwfSVWeZ_vEN7c6bHu2jJnT8.png?imwidth=1400',
+                image_url: 'https://avatars3.githubusercontent.com/u/29040596?s=70&v=4',
             })
             .then((res) => {
                 expect(res).to.have.status(200);

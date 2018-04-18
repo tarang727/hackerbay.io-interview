@@ -124,7 +124,7 @@ class Routes {
         try {
             const imageUrl = has(req.body, 'image_url') && !isEmpty(req.body.image_url)
                 ? req.body.image_url
-                : 'https://cdn.macrumors.com/article-new/2017/11/crying-tears-of-joy-emoji-250x248.jpg';
+                : 'https://avatars2.githubusercontent.com/u/11578670?s=40&v=4';
 
             const imageBuffer = await fetch(imageUrl, {method: 'GET', compress: true}).then((res) => res.buffer());
             const imageThumbnail = await sharp(imageBuffer).resize(50, 50).toBuffer();
