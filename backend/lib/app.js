@@ -13,6 +13,7 @@ const Log = require('./logger');
 const routes = require('./routes');
 const auth = require('./auth');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 /**
  * main application class used to bootstrap an express Application
@@ -71,6 +72,8 @@ class App {
             extended: false,
             limit: '100MB',
         }));
+        app.use('/coverage', express.static(path.resolve(__dirname, '../public/coverage')));
+        app.use('/docs', express.static(path.resolve(__dirname, '../public/docs')));
         app.use(auth.installMiddleware(app));
         /* End of Installation of third party API */
 

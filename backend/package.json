@@ -103,6 +103,6 @@
       "index.js",
       "lib/logger.js"
     ],
-    "report-dir": "./reports/coverage"
+    "report-dir": "./public/coverage"
   }
 }
