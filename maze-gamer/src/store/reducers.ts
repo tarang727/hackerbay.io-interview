@@ -2,15 +2,11 @@
  * created on 18.04.2018
  */
 
-import { CellState, AddCell, AddPlayer } from './types';
+import { GameState, AddCell, AddPlayer } from './types';
 import * as actions from './actions'; 
 import { checkIfCellExist, checkIfPlayerExist, getCell } from './util';
 
-export interface GameState {
-    moves: number;
-    board: Array<CellState>;
-}
-export const defaultState = {
+export const defaultState: GameState = {
     moves: 0,
     board: []
 };

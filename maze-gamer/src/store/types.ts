@@ -18,7 +18,7 @@ export interface Player {
     canMove: boolean;
     position: string;
     adjacent?: Array<{
-        cell: string;
+        cellId: string;
         direction: Direction;
     }>;
 }
@@ -55,7 +55,10 @@ export interface RemovePlayer {
         cellId: string;
     };
 }
-
+export interface GameState {
+    moves: number;
+    board: Array<CellState>;
+}
 /* 
 export interface CheckCell {
     type: string;

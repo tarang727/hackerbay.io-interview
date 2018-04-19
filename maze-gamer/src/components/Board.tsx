@@ -49,7 +49,7 @@ export class Board extends React.Component<any, BoardState> {
                     </div>
                     <div className="w-100" />
                     <div className="col-md-1 mt-2 align-self-center">
-                        <Button className="btn btn-info text-white" onClick={(e) => this.toggle(e)}>Start Game</Button>
+                        <Button className="btn btn-info text-white" onClick={e => this.toggle(e)}>Start Game</Button>
                         <Modal isOpen={this.state.showModal} toggle={() => this.toggle()} className={this.props.className} size="sm" role="dialog" autoFocus centered>
                             <ModalHeader toggle={() => this.toggle()}>Start Game</ModalHeader>
                             <ModalBody>
@@ -59,9 +59,9 @@ export class Board extends React.Component<any, BoardState> {
                     </div>
 
                     <div className="col-md-12 mt-5 mb-5">
-                        <div className="row align-items-center justify-content-center">
-                            <div className="col-1 border border-danger">
-                                <Cell />
+                        <div className="row align-items-center justify-content-center"> {/* ROW */}
+                            <div className="col-1 border border-danger"> {/* COLUMN */}
+                                <Cell /> {/* CELL */}
                             </div>
                         </div>
                     </div>

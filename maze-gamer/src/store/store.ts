@@ -2,15 +2,11 @@
  * created on 18.04.2018
  */
 
-import { combineReducers, createStore } from 'redux';
-import { GameState, gameReducer } from './reducers';
+import { createStore } from 'redux';
+import { gameReducer } from './reducers';
+import { GameState } from './types';
 
-export interface AppState {
-  game: GameState;
-}
-export const store = createStore<AppState, any, any, any>(
-  combineReducers({
-    game: gameReducer
-  }),
+export const store = createStore<GameState, any, any, any>(
+  gameReducer,
   (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
