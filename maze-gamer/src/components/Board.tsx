@@ -36,8 +36,9 @@ export class Board extends React.Component<any, BoardState> {
         this.setState((state) => ({...state, width, height}));        
     }
 
-    public drawBoard() {
-        //
+    public drawBoard(width: number, height: number) {
+        console.log(width, height);
+        this.toggle();
     }
 
     public render() {
@@ -53,7 +54,9 @@ export class Board extends React.Component<any, BoardState> {
                         <Modal isOpen={this.state.showModal} toggle={() => this.toggle()} className={this.props.className} size="sm" role="dialog" autoFocus centered>
                             <ModalHeader toggle={() => this.toggle()}>Start Game</ModalHeader>
                             <ModalBody>
-                                <StartGame />
+                                <StartGame
+                                    startGame={({width, height}) => this.drawBoard(width, height)}
+                                />
                             </ModalBody>
                         </Modal>
                     </div>
