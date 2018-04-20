@@ -15,8 +15,10 @@ export class Cell extends React.Component<CellProps, any> {
     
     public render() {
         return (
-            <td className="border" scope="col">
-                (<small>{this.props.row}</small>, <small>{this.props.column}</small>)
+            <td className="border-0" scope="col" style={{ width: '40px', height: '40px' }}>
+                <div className="border" style={{ width: '40px', height: '40px', margin: '0 !important', padding: '0 !important' }}>
+                    {this.props.children}
+                </div>
             </td>
         );
     }
