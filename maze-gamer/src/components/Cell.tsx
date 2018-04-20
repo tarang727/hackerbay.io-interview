@@ -4,13 +4,20 @@
 
 import * as React from 'react';
 
-export class Cell extends React.Component {
+export interface CellProps {
+    cellId: string;
+    row: number;
+    column: number;
+    totalRows: number;
+    totalColumns: number;
+}
+export class Cell extends React.Component<CellProps, any> {
     
     public render() {
         return (
-            <div className="cell">
-                <p>I am a cell!</p>
-            </div>
+            <td className="border" scope="col">
+                (<small>{this.props.row}</small>, <small>{this.props.column}</small>)
+            </td>
         );
     }
 }

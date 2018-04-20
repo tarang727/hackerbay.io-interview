@@ -29,3 +29,4 @@ export const addPlayer = (cellId: string, player: Player) => {
 };
 export const movePlayer = (cellId: string, playerId: string) => ({ type: 'MOVE_PLAYER', payload: { cellId, playerId } });
 export const removePlayer = (cellId: string) => ({ type: 'REMOVE_PLAYER_FROM_CELL', payload: { cellId } });
+export const exitGame = () => ({ type: 'EXIT_GAME', payload: null });

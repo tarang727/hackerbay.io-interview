@@ -28,6 +28,8 @@ export const gameReducer = (state: GameState = defaultState, action: actions.Act
                 state.board[cellIndex].occupant = Object.assign({}, (action as AddPlayer).payload.player);
             }
             return state;
+        case 'EXIT_GAME':
+            return { moves: 0, board: [] };
         default:
             return state;
     }

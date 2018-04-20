@@ -15,8 +15,6 @@ export enum Direction {
 export interface Player {
     id?: string;
     type: PlayerType;
-    canMove: boolean;
-    position: string;
     adjacent?: Array<{
         cellId: string;
         direction: Direction;
