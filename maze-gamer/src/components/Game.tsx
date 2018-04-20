@@ -6,7 +6,7 @@
  */
 
 import { connect } from 'react-redux';
-import { Board } from './Board';
+import { Board } from './game_environment/Board';
 import { GameState, PlayerType, CellState } from '../store/types';
 import { isNil, findIndex, max } from 'lodash';
 import { getCell } from '../store/util';
@@ -14,11 +14,13 @@ import { addCell, exitGame } from '../store/actions';
 
 const findPlayers = (cellState: CellState, type: PlayerType) => !isNil(cellState.occupant) && cellState.occupant.type === type;
 const findCellState = (board: Array<CellState>) => (cellId: string) => board[getCell(board, cellId)];
+
 const findHeroPlayer = (board: Array<CellState>) => {
     const hero = board.filter(v => findPlayers(v, PlayerType.HERO));
     if (hero.length === 1) { return hero[0]; }
     return null;
 };
+
 const findAdjacentCells = (board: Array<CellState>) => (cellId: string) => {
     const cellState = board[getCell(board, cellId)];
     if (isNil(cellState.occupant) || (cellState.occupant.type !== PlayerType.HERO)) {
@@ -33,6 +35,7 @@ const findAdjacentCells = (board: Array<CellState>) => (cellId: string) => {
     });
     return moves;
 };
+
 const findCellByRowAndColumn = (board: Array<CellState>) => {
     return (row: number, col: number) => {
         const index = findIndex(board, (o: CellState) => (o.cell.row === row && o.cell.column === col));

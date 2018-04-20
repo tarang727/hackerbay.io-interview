@@ -5,7 +5,7 @@
 import * as React from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { isNil, fill } from 'lodash';
-import { StartGame } from './StartGame';
+import { StartGame } from '../StartGame';
 import { Cell } from './Cell';
 
 export interface BoardState {
