@@ -71,6 +71,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
 
     public addEnemies(numOfPlayers: number, totalCells: number) {
         const set = new Set();
+
         while (set.size < numOfPlayers) {
             const randomIdx = random(5, totalCells - 1);
             set.add(randomIdx);
@@ -103,7 +104,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
                             totalColumns={this.props.noOfColumns}
                             totalRows={this.props.noOfRows}
                             addHeroPlayer={this.props.onAddPlayer}
-                            heroPlayerExist={this.props.heroPlayerExist}
+                            getCellByRowCol={this.props.cellByRowAndColumn}
                         />
                     );
                 })}

@@ -50,6 +50,12 @@ export interface RemovePlayer {
         cellId: string;
     };
 }
+export interface UpdateCellOccupant {
+    type: string;
+    payload: {
+        occupant: Player | null;
+    };
+}
 export interface GameState {
     moves: number;
     board: Array<CellState>;

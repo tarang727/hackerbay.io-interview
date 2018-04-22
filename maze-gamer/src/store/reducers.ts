@@ -2,7 +2,7 @@
  * created on 18.04.2018
  */
 
-import { GameState, AddCell, AddPlayer } from './types';
+import { GameState, AddCell, AddPlayer, UpdateCellOccupant } from './types';
 import * as actions from './actions'; 
 import { checkIfCellExist, checkIfPlayerExist, getCell } from './util';
 import { isNil, isError } from 'lodash';
@@ -43,6 +43,24 @@ export const gameReducer = (state: GameState = defaultState, action: actions.Act
                 };
             }
             return state;
+        case 'UPDATE_OCCUPANT':
+            const cellIdx = getCell(state.board, (action as AddPlayer).payload.cellId);
+            if (isNil(cellIdx)) {
+                return state;
+            }
+
+            return {
+                ...state,
+                board: state.board.map((cellState, idx) => {
+                    if (idx === cellIdx) {
+                        return {
+                            ...cellState,
+                            occupant: (action as UpdateCellOccupant).payload.occupant
+                        };
+                    }
+                    return cellState;
+                })
+            };
         case 'EXIT_GAME':
             return { moves: 0, board: [] };
         default:

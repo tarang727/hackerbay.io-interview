@@ -3,9 +3,9 @@
  */
 
 import * as uuid from 'uuid';
-import { MovePlayer, AddPlayer, AddCell, RemovePlayer, Cell, Player } from './types';
+import { MovePlayer, AddPlayer, AddCell, RemovePlayer, Cell, Player, UpdateCellOccupant } from './types';
 
-export type Actions = MovePlayer | AddPlayer | AddCell | RemovePlayer;
+export type Actions = MovePlayer | AddPlayer | AddCell | RemovePlayer | UpdateCellOccupant;
 
 export const addCell = (cell: Cell, player?: Player) => {
     let occupant;
@@ -30,6 +30,7 @@ export const addPlayer = (cellId: string, player: Player) => {
         }
     };
 };
+export const updateCellOccupant = (cellId: string, player: Player | null) => ({ type: 'UPDATE_OCCUPANT', payload: { occupant: player } });
 export const movePlayer = (cellId: string, playerId: string) => ({ type: 'MOVE_PLAYER', payload: { cellId, playerId } });
 export const removePlayer = (cellId: string) => ({ type: 'REMOVE_PLAYER_FROM_CELL', payload: { cellId } });
 export const exitGame = () => ({ type: 'EXIT_GAME', payload: null });
