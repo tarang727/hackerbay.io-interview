@@ -7,7 +7,7 @@ import * as React from 'react';
 export class Enemy {
 
     public render() {
-        return <p>Enemy player</p>;
+        return <p>Ep</p>;
     }
 
 }

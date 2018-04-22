@@ -7,6 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { isNil, fill, random } from 'lodash';
 import { StartGame } from '../StartGame';
 import { Cell } from './Cell';
+import { Player, CellState, PlayerType } from '../../store/types';
 
 export interface BoardState {
     width: number | null;
@@ -14,7 +15,20 @@ export interface BoardState {
     showModal: boolean;
 }
 
-export class Board extends React.Component<any, BoardState> {
+export interface BoardProps {
+    onAddCell: (row: number, column: number, player?: Player | undefined) => void;
+    totalCells: number;
+    onGameExit: () => void;
+    noOfRows: number;
+    noOfColumns: number;
+    cellByRowAndColumn: (row: number, col: number) => CellState | null;
+    className: any;
+    heroPlayerExist: boolean;
+    onAddPlayer: (cellId: string, player: Player) => void;
+    [key: string]: any;
+}
+
+export class Board extends React.Component<BoardProps, BoardState> {
     
     constructor(props: any) {
         super(props);
@@ -38,10 +52,18 @@ export class Board extends React.Component<any, BoardState> {
 
             const rows = fill(Array(width), 'r');
             const cols = fill(Array(height), 'c');
+
+            const setOfPlayers = this.addEnemies(15, ((rows.length + 1) * (cols.length + 1)));
             
             rows.forEach((r, rIdx) => {
                 cols.forEach((c, cIdx) => {
-                    this.props.onAddCell(rIdx + 1, cIdx + 1);
+                    const row = rIdx + 1;
+                    const col = cIdx + 1;
+                    if (setOfPlayers.has(row * col)) {
+                        this.props.onAddCell(row, col, { type: PlayerType.ENEMY });
+                    } else {
+                        this.props.onAddCell(row, col);
+                    }
                 });
             });
         }
@@ -50,7 +72,7 @@ export class Board extends React.Component<any, BoardState> {
     public addEnemies(numOfPlayers: number, totalCells: number) {
         const set = new Set();
         while (set.size < numOfPlayers) {
-            const randomIdx = random(2, totalCells - 1);
+            const randomIdx = random(5, totalCells - 1);
             set.add(randomIdx);
         }
         return set;
@@ -69,54 +91,20 @@ export class Board extends React.Component<any, BoardState> {
         const rows = fill(Array(noOfRows), 'r');
         const cols = fill(Array(noOfColumns), 'c');
 
-        const setOfPlayers = this.addEnemies(15, ((this.state.width as number) * (this.state.height as number)));
-
         return rows.map((r, rIdx) => (
             <tr key={rIdx} style={{ width: 'auto', height: 'auto', margin: 0, padding: 0 }}>
                 {cols.map((c, cIdx) => {
-                    if (cIdx === 0 && rIdx === 0) {
-                        const cell = this.props.cellByRowAndColumn(rIdx + 1, cIdx + 1);
-                        console.log(cell.occupant);
-                        return (
-                            <Cell
-                                key={cIdx}
-                                cellId={this.props.cellByRowAndColumn(rIdx + 1, cIdx + 1)}
-                                row={rIdx + 1}
-                                column={cIdx + 1}
-                                totalColumns={this.props.noOfColumns}
-                                totalRows={this.props.noOfRows}
-                            >
-                                {'H!'}
-                            </Cell>
-                        );
-                    }
-                    
-                    if (setOfPlayers.has((rIdx + 1) * (cIdx + 1))) {
-                        return (
-                            <Cell
-                                key={cIdx}
-                                cellId={this.props.cellByRowAndColumn(rIdx + 1, cIdx + 1)}
-                                row={rIdx + 1}
-                                column={cIdx + 1}
-                                totalColumns={this.props.noOfColumns}
-                                totalRows={this.props.noOfRows}
-                            >
-                                {'E!'}
-                            </Cell>
-                        );
-                    }
-
                     return (
                         <Cell
                             key={cIdx}
-                            cellId={this.props.cellByRowAndColumn(rIdx + 1, cIdx + 1)}
+                            cellState={this.props.cellByRowAndColumn(rIdx + 1, cIdx + 1)}
                             row={rIdx + 1}
                             column={cIdx + 1}
                             totalColumns={this.props.noOfColumns}
                             totalRows={this.props.noOfRows}
-                        >
-                            <small> {rIdx + 1} </small>{', '}<small> {cIdx + 1} </small>
-                        </Cell>
+                            addHeroPlayer={this.props.onAddPlayer}
+                            heroPlayerExist={this.props.heroPlayerExist}
+                        />
                     );
                 })}
             </tr>
@@ -128,7 +116,7 @@ export class Board extends React.Component<any, BoardState> {
             <div className="container">
                 <div className="row justify-content-md-center">
                     <div className="col-md-8 my-1 align-self-center justify-content-center">
-                        <div className="card bg- w-100 text-muted justify-content-center">
+                        <div className="card bg- w-100 text-muted">
                             <div className="card-header bg-transparent">
                             <h3 className="text-muted d-inline">
                                 <b>

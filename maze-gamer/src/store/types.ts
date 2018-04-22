@@ -15,10 +15,7 @@ export enum Direction {
 export interface Player {
     id?: string;
     type: PlayerType;
-    adjacent?: Array<{
-        cellId: string;
-        direction: Direction;
-    }>;
+    adjacent?: Array<{ cellId: string; direction: Direction; }>;
 }
 export interface Cell {
     id?: string;

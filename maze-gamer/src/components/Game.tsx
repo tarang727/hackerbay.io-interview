@@ -7,22 +7,30 @@
 
 import { connect } from 'react-redux';
 import { Board } from './game_environment/Board';
-import { GameState, PlayerType, CellState } from '../store/types';
+import { GameState, PlayerType, CellState, Player } from '../store/types';
 import { isNil, findIndex, max } from 'lodash';
 import { getCell } from '../store/util';
-import { addCell, exitGame } from '../store/actions';
+import { addCell, exitGame, addPlayer } from '../store/actions';
 
 const findPlayers = (cellState: CellState, type: PlayerType) => !isNil(cellState.occupant) && cellState.occupant.type === type;
-const findCellState = (board: Array<CellState>) => (cellId: string) => board[getCell(board, cellId)];
-
+const findCellState = (board: Array<CellState>) => (cellId: string) => {
+    const cell = getCell(board, cellId);
+    if (isNil(cell)) {
+        return null;
+    }
+    return board[cell];
+};
 const findHeroPlayer = (board: Array<CellState>) => {
     const hero = board.filter(v => findPlayers(v, PlayerType.HERO));
     if (hero.length === 1) { return hero[0]; }
     return null;
 };
-
 const findAdjacentCells = (board: Array<CellState>) => (cellId: string) => {
-    const cellState = board[getCell(board, cellId)];
+    const cell = getCell(board, cellId);
+    if (isNil(cell)) {
+        return null;
+    }
+    const cellState = board[cell];
     if (isNil(cellState.occupant) || (cellState.occupant.type !== PlayerType.HERO)) {
         return null;
     }
@@ -35,7 +43,6 @@ const findAdjacentCells = (board: Array<CellState>) => (cellId: string) => {
     });
     return moves;
 };
-
 const findCellByRowAndColumn = (board: Array<CellState>) => {
     return (row: number, col: number) => {
         const index = findIndex(board, (o: CellState) => (o.cell.row === row && o.cell.column === col));
@@ -55,15 +62,19 @@ const mapStateToProps = (state: GameState) => ({
     heroAdjacentCells: findAdjacentCells(state.board),
     cellByRowAndColumn: findCellByRowAndColumn(state.board),
     noOfRows: max(state.board.map(cellState => cellState.cell.row)) || 0,
-    noOfColumns: max(state.board.map(cellState => cellState.cell.column)) || 0
+    noOfColumns: max(state.board.map(cellState => cellState.cell.column)) || 0,
+    heroPlayerExist: findIndex(state.board, o => o.occupant && (o.occupant as Player).type === PlayerType.HERO) > -1
 });
 
 const mapDispatchToProps = (dispatch) => ({
     onGameExit: () => {
         dispatch(exitGame());
     },
-    onAddCell: (row: number, column: number) => {
-        dispatch(addCell({ row, column }));
+    onAddCell: (row: number, column: number, player?: Player | undefined) => {
+        dispatch(addCell({ row, column }, player));
+    },
+    onAddPlayer: (cellId: string, player: Player) => {
+        dispatch(addPlayer(cellId, player));
     }
 });
 

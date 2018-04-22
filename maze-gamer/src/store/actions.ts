@@ -7,13 +7,16 @@ import { MovePlayer, AddPlayer, AddCell, RemovePlayer, Cell, Player } from './ty
 
 export type Actions = MovePlayer | AddPlayer | AddCell | RemovePlayer;
 
-export const addCell = (cell: Cell) => {
-    const id = uuid.v4();
+export const addCell = (cell: Cell, player?: Player) => {
+    let occupant;
+    if (!!player) {
+        occupant = Object.assign({}, player, { id: uuid.v4() });
+    }
     return {
         type: 'ADD_CELL',
         payload: {
-            cell: Object.assign({}, cell, { id }),
-            occupant: null
+            cell: Object.assign({}, cell, { id: uuid.v4() }),
+            occupant: !!player ? occupant : null
         }
     };
 };

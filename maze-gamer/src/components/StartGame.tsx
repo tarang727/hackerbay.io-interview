@@ -65,12 +65,13 @@ export class StartGame extends React.Component<StartGameProps, StartGameState> {
 
     public render() {
         return (
-            <Form onSubmit={e => this.submitForm(e)}>
+            <Form onSubmit={e => this.submitForm(e)} autoFocus>
                 <FormGroup>
                     <Label for="width">Enter the width of the board:</Label>
                     <Input
                         type="text"
                         name="board-width"
+                        autoFocus
                         id="width"
                         placeholder="Width of the Board"
                         onChange={e => this.updateFormState('width', e.target.value)}

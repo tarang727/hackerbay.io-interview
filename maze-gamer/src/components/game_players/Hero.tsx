@@ -7,7 +7,7 @@ import * as React from 'react';
 export class Hero {
 
     public render() {
-        return <p>Hero player</p>;
+        return <p><b>Hp</b></p>;
     }
 
 }

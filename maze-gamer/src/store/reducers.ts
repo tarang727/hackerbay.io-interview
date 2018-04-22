@@ -5,6 +5,7 @@
 import { GameState, AddCell, AddPlayer } from './types';
 import * as actions from './actions'; 
 import { checkIfCellExist, checkIfPlayerExist, getCell } from './util';
+import { isNil, isError } from 'lodash';
 
 export const defaultState: GameState = {
     moves: 0,
@@ -14,7 +15,7 @@ export const gameReducer = (state: GameState = defaultState, action: actions.Act
     switch (action.type) {
         case 'ADD_CELL':
             const doesCellExist = checkIfCellExist(state.board, (action as AddCell).payload.cell);
-            if (!doesCellExist) {
+            if (!isError(doesCellExist)) {
                 return Object.assign({},
                     state,
                     { board: state.board.concat((action as AddCell).payload) }
@@ -24,8 +25,22 @@ export const gameReducer = (state: GameState = defaultState, action: actions.Act
         case 'ADD_PLAYER_TO_CELL':
             const doesPlayerExist = checkIfPlayerExist(state.board, (action as AddPlayer).payload.player);
             const cellIndex = getCell(state.board, (action as AddPlayer).payload.cellId);
-            if (!doesPlayerExist || !state.board[cellIndex].occupant) {
-                state.board[cellIndex].occupant = Object.assign({}, (action as AddPlayer).payload.player);
+            if (isNil(cellIndex)) {
+                return state;
+            }
+            if (!isError(doesPlayerExist) || !state.board[cellIndex].occupant) {
+                return {
+                    ...state,
+                    board: state.board.map((cellState, idx) => {
+                        if (idx === cellIndex) {
+                            return {
+                                ...cellState,
+                                occupant: Object.assign({}, (action as AddPlayer).payload.player)
+                            };
+                        }
+                        return cellState;
+                    })
+                };
             }
             return state;
         case 'EXIT_GAME':
