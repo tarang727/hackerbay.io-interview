@@ -10,7 +10,7 @@ import { Board } from './game_environment/Board';
 import { GameState, PlayerType, CellState, Player } from '../store/types';
 import { isNil, findIndex, max } from 'lodash';
 import { getCell } from '../store/util';
-import { addCell, exitGame, addPlayer } from '../store/actions';
+import { addCell, exitGame, addPlayer, updateCellOccupant } from '../store/actions';
 
 const findPlayers = (cellState: CellState, type: PlayerType) => !isNil(cellState.occupant) && cellState.occupant.type === type;
 const findCellState = (board: Array<CellState>) => (cellId: string) => {
@@ -75,6 +75,9 @@ const mapDispatchToProps = (dispatch) => ({
     },
     onAddPlayer: (cellId: string, player: Player) => {
         dispatch(addPlayer(cellId, player));
+    },
+    onUpdateCellOccupant: (cellId, player: Player | null) => {
+        dispatch(updateCellOccupant(cellId, player));
     }
 });
 

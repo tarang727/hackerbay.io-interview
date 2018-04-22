@@ -26,33 +26,42 @@ export class Cell extends React.Component<CellProps, any> {
                 return { name: 'hero', color: '#F9A825' };
             }
         }
-        return { name: 'empty', color: '#999' };
+        return { name: 'empty', color: '#F5F5F5' };
     }
 
     public getAdjacentCells() {
+        const adjacentCells: Array<{ cellId: string; direction: Direction; }> = [];
         if (!isNil(this.props.cellState) && !isNil(this.props.cellState.occupant) && this.props.cellState.occupant.type === PlayerType.HERO) {
             for (let dir in Direction) {
                 if (isNaN(Number(dir))) {
                     if (dir === 'TOP') {
                         const cellAbove = this.props.getCellByRowCol(this.props.row - 1, this.props.column);
-                        console.log((cellAbove) ? cellAbove.occupant : 'No such cell');
+                        if (cellAbove) {
+                            adjacentCells.push({ cellId: (cellAbove as any).cell.id, direction: Direction.TOP });
+                        }
                     }
                     if (dir === 'BOTTOM') {
                         const cellAbove = this.props.getCellByRowCol(this.props.row + 1, this.props.column);
-                        console.log((cellAbove) ? cellAbove.occupant : 'No such cell');
+                        if (cellAbove) {
+                            adjacentCells.push({ cellId: (cellAbove as any).cell.id, direction: Direction.BOTTOM });
+                        }
                     }
                     if (dir === 'LEFT') {
                         const cellAbove = this.props.getCellByRowCol(this.props.row, this.props.column - 1);
-                        console.log((cellAbove) ? cellAbove.occupant : 'No such cell');
+                        if (cellAbove) {
+                            adjacentCells.push({ cellId: (cellAbove as any).cell.id, direction: Direction.LEFT });
+                        }
                     }
                     if (dir === 'RIGHT') {
                         const cellAbove = this.props.getCellByRowCol(this.props.row, this.props.column + 1);
-                        console.log((cellAbove) ? cellAbove.occupant : 'No such cell');
+                        if (cellAbove) {
+                            adjacentCells.push({ cellId: (cellAbove as any).cell.id, direction: Direction.RIGHT });
+                        }
                     }
                 }
             }
+            console.log(adjacentCells);
         }
-        
     }
 
     public placeHeroPlayer() {
