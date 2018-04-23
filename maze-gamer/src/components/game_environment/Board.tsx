@@ -25,6 +25,7 @@ export interface BoardProps {
     className: any;
     heroPlayerExist: boolean;
     onAddPlayer: (cellId: string, player: Player) => void;
+    onUpdateCellOccupant: (cellId: string, player: Player | null) => void;
     [key: string]: any;
 }
 
@@ -105,6 +106,7 @@ export class Board extends React.Component<BoardProps, BoardState> {
                             totalRows={this.props.noOfRows}
                             addHeroPlayer={this.props.onAddPlayer}
                             getCellByRowCol={this.props.cellByRowAndColumn}
+                            updateAdjacentCells={this.props.onUpdateCellOccupant}
                         />
                     );
                 })}

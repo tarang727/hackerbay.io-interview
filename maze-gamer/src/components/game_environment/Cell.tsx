@@ -2,6 +2,8 @@
  * created on 18.04.2018
  */
 
+// [TODO]: Component should update adjacent cells once the hero player is created //
+
 import * as React from 'react';
 import { CellState, Player, PlayerType, Direction } from '../../store/types';
 import { isNil } from 'lodash';
@@ -14,6 +16,7 @@ export interface CellProps {
     totalColumns: number;
     addHeroPlayer: (cellId: string, player: Player) => void;
     getCellByRowCol: (row: number, col: number) => CellState | null;
+    updateAdjacentCells: (cellId: string, player: Player | null) => void;
 }
 export class Cell extends React.Component<CellProps, any> {
 
@@ -60,7 +63,9 @@ export class Cell extends React.Component<CellProps, any> {
                     }
                 }
             }
-            console.log(adjacentCells);
+            const { id: cellId } = (this.props.cellState as any).cell;
+            const { type, id } = (this.props.cellState as any).occupant;
+            this.props.updateAdjacentCells(cellId, { type, id, adjacent: adjacentCells });
         }
     }
 
@@ -76,9 +81,9 @@ export class Cell extends React.Component<CellProps, any> {
         this.placeHeroPlayer();
     }
 
-    public componentDidUpdate() {
+/*     public componentDidUpdate() {
         this.getAdjacentCells();
-    }
+    } */
     
     public render() {
         return (

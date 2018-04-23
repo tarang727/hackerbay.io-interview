@@ -45,6 +45,7 @@ export const gameReducer = (state: GameState = defaultState, action: actions.Act
             return state;
         case 'UPDATE_OCCUPANT':
             const cellIdx = getCell(state.board, (action as AddPlayer).payload.cellId);
+            console.log(cellIdx);
             if (isNil(cellIdx)) {
                 return state;
             }
