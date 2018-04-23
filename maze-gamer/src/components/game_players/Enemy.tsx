@@ -4,7 +4,7 @@
 
 import * as React from 'react';
 
-export class Enemy {
+export class Enemy extends React.Component {
 
     public render() {
         return <p>Ep</p>;

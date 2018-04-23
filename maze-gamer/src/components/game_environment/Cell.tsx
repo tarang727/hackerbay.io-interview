@@ -7,6 +7,8 @@
 import * as React from 'react';
 import { CellState, Player, PlayerType, Direction } from '../../store/types';
 import { isNil, delay } from 'lodash';
+import { Hero } from '../game_players/Hero';
+import { Enemy } from '../game_players/Enemy';
 
 export interface CellProps {
     cellState: CellState | null;
@@ -77,9 +79,24 @@ export class Cell extends React.Component<CellProps, any> {
         }
     }
 
+    public move(cellId: string, playerId: string) {
+        //
+    }
+
+    public placePlayers() {
+        if (this.props.cellState && this.props.cellState.occupant) {
+            if (this.props.cellState.occupant.type === PlayerType.ENEMY) {
+                return (<Enemy />);
+            }
+            if (this.props.cellState.occupant.type === PlayerType.HERO) {
+                return (<Hero player={this.props.cellState.occupant || null}  />);
+            }
+        }
+        return null;
+    }
+
     public componentDidMount() {
         this.placeHeroPlayer();
-
         /**
          * delay getting adjacent cells in-order to have the hero player created first
          */
@@ -88,11 +105,6 @@ export class Cell extends React.Component<CellProps, any> {
         }, 1000);
     }
 
-/*     public componentDidUpdate() {
-        const getAdjCells = once();
-        getAdjCells();
-    }
-     */
     public render() {
         return (
             <td className="border-0 bg-white" scope="col" style={{ width: '40px', height: '40px' }}>
@@ -107,8 +119,7 @@ export class Cell extends React.Component<CellProps, any> {
                         borderRadius: '5px'
                     }}
                 >
-                    {(this.props.cellState) ? this.props.cellState.cell.row : null},
-                    {(this.props.cellState) ? this.props.cellState.cell.column : null}
+                    {this.placePlayers()}
                 </div>
             </td>
         );
