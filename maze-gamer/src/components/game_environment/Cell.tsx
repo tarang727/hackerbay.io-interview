@@ -6,7 +6,7 @@
 
 import * as React from 'react';
 import { CellState, Player, PlayerType, Direction } from '../../store/types';
-import { isNil } from 'lodash';
+import { isNil, delay } from 'lodash';
 
 export interface CellProps {
     cellState: CellState | null;
@@ -79,12 +79,20 @@ export class Cell extends React.Component<CellProps, any> {
 
     public componentDidMount() {
         this.placeHeroPlayer();
+
+        /**
+         * delay getting adjacent cells in-order to have the hero player created first
+         */
+        delay(() => {
+            this.getAdjacentCells();
+        }, 1000);
     }
 
 /*     public componentDidUpdate() {
-        this.getAdjacentCells();
-    } */
-    
+        const getAdjCells = once();
+        getAdjCells();
+    }
+     */
     public render() {
         return (
             <td className="border-0 bg-white" scope="col" style={{ width: '40px', height: '40px' }}>
